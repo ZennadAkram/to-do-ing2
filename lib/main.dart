@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ninja/auth/login.dart';
-import 'package:ninja/auth/signup.dart';
+
+import 'auth/login.dart';
+import 'auth/signup.dart';
 import "settings.dart";
 import 'add.dart';
 import 'finished.dart';
@@ -13,6 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   Platform.isAndroid?
   await Firebase.initializeApp(
@@ -25,6 +27,7 @@ void main() async {
   )
 :await Firebase.initializeApp();
   runApp(const MyApp());
+
 }
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -39,6 +42,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
 
       home:FirebaseAuth.instance.currentUser == null ? const login() :const homepage(),
+      debugShowCheckedModeBanner: false,
+      title: 'Just Do It',
       routes: {
         'add':(context)=>const add(),
         'remove':(context)=>const remove(),

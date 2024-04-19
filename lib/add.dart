@@ -1,9 +1,6 @@
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class add extends StatefulWidget {
  const add({super.key});
@@ -17,11 +14,13 @@ class _addState extends State<add> {
   bool show =true;
   @override
   Widget build(BuildContext context) {
+
     return  Scaffold(
+
       appBar: AppBar(
-        title: const Text("Activities",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold,color: Colors.white),),
-       // centerTitle: true,
-        backgroundColor: Colors.blue,
+        title: const Text("Just Do It",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500,color: Colors.black),),
+       centerTitle: true,
+        backgroundColor: Colors.grey[200],
       ),
       drawer: Drawer(
         child: ListView(
@@ -98,12 +97,12 @@ class _addState extends State<add> {
           ],
         ),
       ),
-      body:  show ? Center( child:  Column(
+      body:  show ? const Center( child:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 
 
-            const ClipOval(
+            ClipOval(
               child: Image(
                 width: 200,
                 height: 200,
@@ -113,7 +112,7 @@ class _addState extends State<add> {
               ),
             ),
 
-           const SizedBox(height: 20), // Spacer between image and text
+           SizedBox(height: 20), // Spacer between image and text
 
              Text(
             'Add tasks',
@@ -128,14 +127,14 @@ class _addState extends State<add> {
           : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text('Pending Tasks', style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+        const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text('Pending Tasks', style: TextStyle(fontSize: 30,fontWeight: FontWeight.w800),),
 
         ),
 
       Expanded(child: ListView.builder(
-padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
     itemCount: tasks.length,
     itemBuilder: (context, index) {
       Task task = tasks[index];
@@ -147,17 +146,18 @@ padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
            color: Colors.white,
             borderRadius: BorderRadius.circular(8),
           ),
-          margin: EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: 8),
           child: ListTile(
 
-          title: Text(task.title,style: TextStyle(fontWeight: FontWeight.bold),),
-      subtitle: Text(task.description,style: TextStyle(
+          title: Text(task.title,style: const TextStyle(fontWeight: FontWeight.bold),),
+      subtitle: Text(task.description,style: const TextStyle(
 
         color: Colors.grey
       ),),
 
       leading: Checkbox(
-      checkColor: Colors.green,
+      checkColor: Colors.white,
+
       value: task.isCompleted,
       onChanged: (value) {
       setState(() {
@@ -166,10 +166,13 @@ padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
 
       });
       },
+        activeColor: Color(0xFF0FE14F),
+
+     side:const BorderSide(width: 2,color:  Color(0xFF0FE14F)),
       ),
        trailing: PopupMenuButton<int>(
          itemBuilder: (context) => [
-           PopupMenuItem(
+           const PopupMenuItem(
              value: 1,
 
              child: ListTile(
@@ -179,7 +182,7 @@ padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                title: Text('Edit'),
              ),
            ),
-           PopupMenuItem(
+           const PopupMenuItem(
              value: 2,
              child: ListTile(
                leading: Icon(
@@ -198,30 +201,39 @@ showDialog(context: context,
   TextEditingController t3=TextEditingController();
   TextEditingController t4=TextEditingController();
   return AlertDialog(
-    title: Text('Editing'),
+    title: const Text('Editing'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: t3,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Task',
             ),
           ),
           TextField(
             controller: t4,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Description',
             ),
           ),
           TextButton(onPressed:(){
             setState(() {
+
               task.title=t3.text;
               task.description=t4.text;
-              updateUser(task);
+              List<Task> task2=gettasks() as List<Task>;
+              for(Task t2 in task2){
+                if(task.title==t2.title && task.description==t2.description){
+                  task.id=t2.id;
+                  print(t2.id);
+                  updateUser(task);
+                }
+              }
+
             });
             Navigator.pop(context);
-          }, child:Text('Edit',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),))
+          }, child:const Text('Edit',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),))
         ],
 
       ),
@@ -256,10 +268,10 @@ showDialog(context: context,
       ),
     ],
       ),
+    backgroundColor: Colors.grey[200],
 
-    backgroundColor: Colors.grey[300],
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
         onPressed:() {
 
           _addTask();
@@ -284,17 +296,17 @@ showDialog(context: context,
        TextEditingController descriptionController = TextEditingController();
 
        return AlertDialog(
-         title: Text('Add Task'),
+         title: const Text('Add Task'),
          content: Column(
            mainAxisSize: MainAxisSize.min,
            children: [
              TextField(
                controller: titleController,
-               decoration: InputDecoration(labelText: 'Title'),
+               decoration: const InputDecoration(labelText: 'Title'),
              ),
              TextField(
                controller: descriptionController,
-               decoration: InputDecoration(labelText: 'Description'),
+               decoration: const InputDecoration(labelText: 'Description'),
              ),
            ],
          ),
@@ -303,6 +315,8 @@ showDialog(context: context,
              onPressed: () {
                Task task=Task();
                setState(() {
+
+
                   task.title=titleController.text;
                  task.description=descriptionController.text;
                  task.isCompleted=false;
@@ -315,7 +329,7 @@ showDialog(context: context,
                Navigator.pop(context);
                addUser(task);
              },
-             child: Text('Add'),
+             child: const Text('Add'),
            ),
          ],
        );
@@ -341,7 +355,8 @@ showDialog(context: context,
       }
 
   }
-  void gettasks() async {
+   Future<List<Task>> gettasks() async {
+    List<Task> tasks1=[];
     String userUid = getCurrentUserUid();
     if(userUid.isNotEmpty) {
       QuerySnapshot querySnapshot = await tasklist.doc(userUid).collection('user_tasks').get();
@@ -349,16 +364,24 @@ showDialog(context: context,
       tasks.addAll(querySnapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         Task task = Task();
+
         task.id = doc.id;
         task.title = data['Task'] ?? '';
         task.description = data['Description'] ?? '';
         task.isCompleted = data['completed'] ?? false;
+        tasks1.add(task);
+        setState(() {
+
+        });
         return task;
       }));
     }
     setState(() {
 
     });
+return tasks1;
+
+
   }
 
 
@@ -388,6 +411,7 @@ void initState(){
     }
   }
   Future<void> updateUser(Task task) {
+
     return tasklist
         .doc(getCurrentUserUid())
         .collection('user_tasks')

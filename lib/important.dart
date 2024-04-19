@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import'package:flutter/material.dart';
 class Task {
  late String title;
@@ -123,8 +122,8 @@ class _importantState extends State<important> {
       :Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Text('Important Tasks', style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
 
     ),
@@ -277,7 +276,7 @@ activeColor: Colors.blue[900],
       TextEditingController t3=TextEditingController();
       TextEditingController t4=TextEditingController();
         return AlertDialog(
-          title: Text('Add Important Tasks'),
+          title: const Text('Add Important Tasks'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
