@@ -1,9 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class add extends StatefulWidget {
- const add({super.key});
+  const add({super.key});
 
   @override
   State<add> createState() => _addState();
@@ -19,7 +18,7 @@ class _addState extends State<add> {
 
       appBar: AppBar(
         title: const Text("Just Do It",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500,color: Colors.black),),
-       centerTitle: true,
+        centerTitle: true,
         backgroundColor: Colors.grey[200],
       ),
       drawer: Drawer(
@@ -29,7 +28,7 @@ class _addState extends State<add> {
             const DrawerHeader(
 
               decoration: BoxDecoration(
-               color: Colors.blue,
+               color:  Color(0xFF0FE14F),
 
               ),
 
@@ -102,23 +101,23 @@ class _addState extends State<add> {
         children: [
 
 
-            ClipOval(
-              child: Image(
+          ClipOval(
+            child: Image(
                 width: 200,
                 height: 200,
                 fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://th.bing.com/th/id/OIG1.bJntFHgjhAjJba1dRPHL?w=1024&h=1024&rs=1&pid=ImgDetMain'),
-              ),
+                image: AssetImage('assets/images/OIG2.jpg')
             ),
+          ),
 
-           SizedBox(height: 20), // Spacer between image and text
+          SizedBox(height: 20),// Spacer between image and text
 
-             Text(
+          Text(
             'Add tasks',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.blue),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:Color(0xFF0FE14F) ),
 
           ),
+
         ],
       )
 
@@ -126,149 +125,148 @@ class _addState extends State<add> {
 
           : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text('Pending Tasks', style: TextStyle(fontSize: 30,fontWeight: FontWeight.w800),),
-
-        ),
-
-      Expanded(child: ListView.builder(
-padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-    itemCount: tasks.length,
-    itemBuilder: (context, index) {
-      Task task = tasks[index];
-
-      return Container(
-
-          decoration: BoxDecoration(
-
-           color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          child: ListTile(
-
-          title: Text(task.title,style: const TextStyle(fontWeight: FontWeight.bold),),
-      subtitle: Text(task.description,style: const TextStyle(
-
-        color: Colors.grey
-      ),),
-
-      leading: Checkbox(
-      checkColor: Colors.white,
-
-      value: task.isCompleted,
-      onChanged: (value) {
-      setState(() {
-      task.isCompleted = value!;
-      updateUser(task);
-
-      });
-      },
-        activeColor: Color(0xFF0FE14F),
-
-     side:const BorderSide(width: 2,color:  Color(0xFF0FE14F)),
-      ),
-       trailing: PopupMenuButton<int>(
-         itemBuilder: (context) => [
-           const PopupMenuItem(
-             value: 1,
-
-             child: ListTile(
-               leading: Icon(
-                 Icons.mode_edit,
-               ),
-               title: Text('Edit'),
-             ),
-           ),
-           const PopupMenuItem(
-             value: 2,
-             child: ListTile(
-               leading: Icon(
-                 Icons.delete,
-               ),
-               title: Text('Delete'),
-             ),
-           ),
-
-         ],
-         onSelected: (value) {
-           switch (value) {
-             case 1:
-showDialog(context: context,
-    builder: (BuildContext context){
-  TextEditingController t3=TextEditingController();
-  TextEditingController t4=TextEditingController();
-  return AlertDialog(
-    title: const Text('Editing'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          TextField(
-            controller: t3,
-            decoration: const InputDecoration(
-              hintText: 'Task',
-            ),
-          ),
-          TextField(
-            controller: t4,
-            decoration: const InputDecoration(
-              hintText: 'Description',
-            ),
-          ),
-          TextButton(onPressed:(){
-            setState(() {
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text('Pending Tasks', style: TextStyle(fontSize: 30,fontWeight: FontWeight.w800),),
 
-              task.title=t3.text;
-              task.description=t4.text;
-              List<Task> task2=gettasks() as List<Task>;
-              for(Task t2 in task2){
-                if(task.title==t2.title && task.description==t2.description){
-                  task.id=t2.id;
-                  print(t2.id);
-                  updateUser(task);
-                }
-              }
+          ),
 
-            });
-            Navigator.pop(context);
-          }, child:const Text('Edit',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),))
+          Expanded(child: ListView.builder(
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              Task task = tasks[index];
+
+              return Container(
+
+                decoration: BoxDecoration(
+
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                child: ListTile(
+
+                  title: Text(task.title,style: const TextStyle(fontWeight: FontWeight.bold),),
+                  subtitle: Text(task.description,style: const TextStyle(
+
+                      color: Colors.grey
+                  ),),
+
+                  leading: Checkbox(
+                    checkColor: Colors.white,
+
+                    value: task.isCompleted,
+                    onChanged: (value) {
+                      setState(() {
+                        task.isCompleted = value!;
+                        updateUser(task);
+
+                      });
+                    },
+                    activeColor: Color(0xFF0FE14F),
+
+                    side:const BorderSide(width: 2,color:  Color(0xFF0FE14F)),
+                  ),
+                  trailing: PopupMenuButton<int>(
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: 1,
+
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.mode_edit,
+                          ),
+                          title: Text('Edit'),
+                        ),
+                      ),
+                      const PopupMenuItem(
+                        value: 2,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.delete,
+                                 color: Colors.red,
+
+                          ),
+
+                          title: Text('Delete',style: TextStyle(color: Colors.red),),
+                        ),
+                      ),
+
+                    ],
+                    onSelected: (value) {
+                      switch (value) {
+                        case 1:
+                          showDialog(context: context,
+                              builder: (BuildContext context){
+                                TextEditingController t3=TextEditingController();
+                                TextEditingController t4=TextEditingController();
+                                return AlertDialog(
+                                  title: const Text('Editing'),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextField(
+                                        controller: t3,
+                                        decoration: const InputDecoration(
+                                          hintText: 'Task',
+                                        ),
+                                      ),
+                                      TextField(
+                                        controller: t4,
+                                        decoration: const InputDecoration(
+                                          hintText: 'Description',
+                                        ),
+                                      ),
+                                      TextButton(onPressed:(){
+                                        setState(() {
+
+                                          task.title=t3.text;
+                                          task.description=t4.text;
+
+
+                                          updateUser(task);
+
+
+                                        });
+                                        Navigator.pop(context);
+                                      }, child:const Text('Edit',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),))
+                                    ],
+
+                                  ),
+
+                                );
+                              }
+                          );
+
+                          break;
+                        case 2:
+                          setState(() {
+                            tasks.remove(task);
+                            deleteUser(task);
+                            if(tasks.isEmpty){
+                              show=true;
+                            }
+                          });
+
+
+                          break;
+
+                        default:
+                          break;
+                      }
+                    },
+                  ),
+                ),
+
+              );
+            },
+          ),
+          ),
         ],
-
       ),
-
-      );
-    }
-);
-
-               break;
-             case 2:
-               setState(() {
-                 tasks.remove(task);
-                 deleteUser(task);
-                 if(tasks.isEmpty){
-                   show=true;
-                 }
-               });
-
-
-               break;
-
-             default:
-               break;
-           }
-         },
-       ),
-      ),
-
-      );
-    },
-      ),
-      ),
-    ],
-      ),
-    backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[200],
 
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
@@ -288,75 +286,79 @@ showDialog(context: context,
       ),
     );
   }
- void _addTask() {
-   showDialog(
-     context: context,
-     builder: (BuildContext context) {
-       TextEditingController titleController = TextEditingController();
-       TextEditingController descriptionController = TextEditingController();
+  void _addTask() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController titleController = TextEditingController();
+        TextEditingController descriptionController = TextEditingController();
 
-       return AlertDialog(
-         title: const Text('Add Task'),
-         content: Column(
-           mainAxisSize: MainAxisSize.min,
-           children: [
-             TextField(
-               controller: titleController,
-               decoration: const InputDecoration(labelText: 'Title'),
-             ),
-             TextField(
-               controller: descriptionController,
-               decoration: const InputDecoration(labelText: 'Description'),
-             ),
-           ],
-         ),
-         actions: [
-           TextButton(
-             onPressed: () {
-               Task task=Task();
-               setState(() {
+        return AlertDialog(
+          title: const Text('Add Task'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(labelText: 'Description'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Task task=Task();
+                setState(() {
 
 
                   task.title=titleController.text;
-                 task.description=descriptionController.text;
-                 task.isCompleted=false;
+                  task.description=descriptionController.text;
+                  task.isCompleted=false;
 
-                 tasks.add(task);
-                 show=false;
+                  tasks.add(task);
+                  show=false;
 
 
-               });
-               Navigator.pop(context);
-               addUser(task);
-             },
-             child: const Text('Add'),
-           ),
-         ],
-       );
-     },
-   );
- }
+                });
+                Navigator.pop(context);
+                addUser(task);
+               tasks.clear();
+               gettasks();
+
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
   CollectionReference tasklist = FirebaseFirestore.instance.collection('task');
 
   Future<void> addUser(Task task) async {
 
-      try {
-        String userUid = getCurrentUserUid();
-        if(userUid.isNotEmpty) {
-          await tasklist.doc(userUid).collection('user_tasks').add({
+    try {
+      String userUid = getCurrentUserUid();
+      if(userUid.isNotEmpty) {
+        await tasklist.doc(userUid).collection('user_tasks').add({
 
-            'Task': task.title,
-            'Description': task.description,
-            'completed': task.isCompleted,
-          });
-        }
-      } catch (e) {
-        print("Failed to add task: $e");
+          'Task': task.title,
+          'Description': task.description,
+          'completed': task.isCompleted,
+        });
       }
+    } catch (e) {
+      print("Failed to add task: $e");
+    }
 
   }
-   Future<List<Task>> gettasks() async {
+  Future<List<Task>> gettasks() async {
     List<Task> tasks1=[];
+    //tasks.clear();
     String userUid = getCurrentUserUid();
     if(userUid.isNotEmpty) {
       QuerySnapshot querySnapshot = await tasklist.doc(userUid).collection('user_tasks').get();
@@ -376,26 +378,25 @@ showDialog(context: context,
         return task;
       }));
     }
+
     setState(() {
 
     });
-return tasks1;
+    return tasks1;
 
 
   }
 
 
   @override
-void initState(){
-
-  show = false;
-
+  void initState(){
+    show=false;
     gettasks();
 
-  super.initState();
+    super.initState();
 
 
-}
+  }
   String getCurrentUserUid() {
     User? user = FirebaseAuth.instance.currentUser;
     return user != null ? user.uid : '';
@@ -433,3 +434,4 @@ class Task {
   late String id;
 
 }
+

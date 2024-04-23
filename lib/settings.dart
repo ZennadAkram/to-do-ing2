@@ -34,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color:  Color(0xFF0FE14F),
               ),
               child:Text(
                 'Menu',

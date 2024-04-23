@@ -47,7 +47,7 @@ class _removeState extends State<remove> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color:  Color(0xFF0FE14F),
               ),
               child:
               Text(
