@@ -44,6 +44,17 @@ dependencies:
   google_sign_in: ^6.2.1
   google_fonts: ^6.2.1
   awesome_dialog: ^3.2.0
+  intl: ^0.19.0
+  flutter_gravatar: ^2.0.2
+  flutter_local_notifications: ^13.0.0
+  flutter_timezone: ^1.0.8
+  timezone: ^0.9.3
+  flutter_datetime_picker: ^1.5.1
+  firebase_app_check: ^0.2.2+4
+
+
+
+
 
 dev_dependencies:
 
@@ -66,6 +77,9 @@ flutter_launcher_icons:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
+    - assets/images/OIG5.jpg
+    - assets/images/logo.jpg
+    - assets/images/OIG3.jpg
     - assets/images/OIG2.jpg
   uses-material-design: true
 dependency_overrides:

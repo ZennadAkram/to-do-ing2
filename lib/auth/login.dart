@@ -13,6 +13,7 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  bool _obscureText = true;
   void _showErrorDialog(String title, String description) {
     print('Showing error dialog: $title - $description'); // Add this line for debugging
     AwesomeDialog(
@@ -36,16 +37,11 @@ class _loginState extends State<login> {
 
           children: [
             Container(height: 50,),
-          const Center(
+           Center(
 
          child:ClipOval(
 
-            child:Image(
-              image: NetworkImage('https://th.bing.com/th/id/OIG2.0Qpx4xQBAa7U.o_e14LY?w=1024&h=1024&rs=1&pid=ImgDetMain'),
-              width: 100,
-              height: 100,
-
-            ),
+            child: Image.asset('assets/images/logo.jpg', height: 100, width: 100,),
         ),
           ),
 
@@ -79,8 +75,20 @@ class _loginState extends State<login> {
             Container(
               margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child:   TextFormField(
+                obscureText: _obscureText,
+
                controller: password,
                 decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  ),
 
                   hintText: 'Enter Your Password',
 
@@ -100,8 +108,18 @@ class _loginState extends State<login> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                TextButton(onPressed: () async {
+                  await  FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Reset Email Sent to ${email.text}'),
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
+                },
 
-                Text('Forget Password?   ',style: TextStyle(color: Colors.grey[700],fontWeight: FontWeight.w400),),
+                  child: Text('Forget Password?   ',style: TextStyle(color: Colors.grey[700],fontWeight: FontWeight.w400),),
+                )
               ],
             ),
 ],
@@ -118,12 +136,18 @@ class _loginState extends State<login> {
              color: Colors.blue,
              child: const Text('Login',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                onPressed:() async {
+
                  try {
                    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                      email: email.text,
                      password: password.text,
                    );
-                   Navigator.of(context).pushReplacementNamed('home');
+                   if(FirebaseAuth.instance.currentUser!.emailVerified) {
+                     Navigator.of(context).pushReplacementNamed('home');
+                   }else
+                     {
+                       Navigator.of(context).pushReplacementNamed('verif');
+                     }
                  } on FirebaseAuthException catch (e) {
 
                    if (e.code == 'auth/user-not-found') {
@@ -184,7 +208,7 @@ class _loginState extends State<login> {
 
               ),
               TextSpan(
-                text: 'Registre',
+                text: 'Sign Up',
                 style: const TextStyle(
                   color: Colors.blue,
                   fontSize: 20,

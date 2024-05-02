@@ -58,17 +58,7 @@ class _removeState extends State<remove> {
                 ),
               ) ,
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.home,
-              ),
-              title: const Text("Home Page",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              onTap: (){
-                Navigator.pop(context);
-                Navigator.of(context).pushReplacementNamed('home');
 
-              },
-            ),
             ListTile(
 
               leading: const Icon(

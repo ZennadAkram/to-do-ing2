@@ -26,7 +26,7 @@ buildscript {
 
     dependencies {
         // ... other dependencies
-    //  classpath 'com.android.tools.build:gradle:8.7'
+
         //classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:0.0.1"
         classpath 'com.google.gms:google-services:4.4.1'
     }
